@@ -147,6 +147,7 @@
   import {
     mapGetters,
   } from 'vuex'
+  import { getBranch } from '@/util/helpers'
 
   import kebabCase from 'lodash/kebabCase'
 
@@ -165,7 +166,7 @@
       loading: true,
       parsed: undefined,
       selected: 'template',
-      branch: process.env.NODE_ENV === 'production' ? 'master' : 'dev',
+      branch: undefined,
     }),
 
     computed: {
@@ -209,6 +210,8 @@
         /* webpackMode: "lazy-once" */
         `!raw-loader!../../examples/${this.file}.vue`
       ).then(comp => this.boot(comp.default))
+
+      this.branch = getBranch()
     },
 
     methods: {
